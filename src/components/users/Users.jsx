@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromUsers } from "../../context/userSlice";
 import { follow } from "../../context/followSlice";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 function Users({ data }) {
+    let location = useLocation();
     const dispatch = useDispatch();
     let followData = useSelector((state) => state.follow.value);
     return (
@@ -18,18 +20,27 @@ function Users({ data }) {
                     <h2>{user.name}</h2>
                     <p>{user.profession}</p>
                     <p>{user.age} years old</p>
-                    <button onClick={() => dispatch(removeFromUsers(user))}>
-                        Remove
-                    </button>
-                    <button
-                        onClick={() => {
-                            dispatch(follow(user));
-                        }}
-                    >
-                        {followData.some((el) => el.id === user.id)
-                            ? "Un follow"
-                            : "Follow"}
-                    </button>
+                    <div className="users__btns">
+                        {!location.pathname.includes("/following") ? (
+                            <button
+                                onClick={() => dispatch(removeFromUsers(user))}
+                            >
+                                Remove
+                            </button>
+                        ) : (
+                            <></>
+                        )}
+
+                        <button
+                            onClick={() => {
+                                dispatch(follow(user));
+                            }}
+                        >
+                            {followData.some((el) => el.id === user.id)
+                                ? "Un follow"
+                                : "Follow"}
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>
