@@ -1,17 +1,21 @@
-import React from 'react'
-import "./Navbar.css"
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import "./Navbar.css";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Navbar() {
-
-  return (
-    <div className='navbar'>
-        <h2>Redux Toolkit</h2>
-        <NavLink to={"/"}>Home</NavLink>
-        <NavLink to={"/create-user"}>Create user</NavLink>
-        <NavLink to={"/all-users"}>All users <sup>0</sup></NavLink>
-    </div>
-  )
+    let users = useSelector((s) => s.users.value);
+    return (
+        <div className="navbar">
+            <h2>Redux Toolkit</h2>
+            <NavLink to={"/"}>Home</NavLink>
+            <NavLink to={"/create-user"}>Create user</NavLink>
+            <NavLink to={"/all-users"}>
+                All users <sup>{users.length}</sup>
+            </NavLink>
+            <NavLink to={"/following"}>Following</NavLink>
+        </div>
+    );
 }
 
-export default Navbar
+export default Navbar;
